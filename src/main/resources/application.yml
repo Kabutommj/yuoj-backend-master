@@ -23,15 +23,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/match
     username: root
-    password: 1234
+    password: 123456
   # Redis 配置
   # todo 需替换配置，然后取消注释
   redis:
     database: 1
-    host: localhost
+    host: 182.254.140.26
     port: 6379
     timeout: 5000
-#    password: 123456
+    password: Wzy020730!
   # Elasticsearch 配置
   # todo 需替换配置，然后取消注释
 #  elasticsearch:
