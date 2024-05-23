@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yupi.yuoj.mapper.CompetitionMapper">
+  <resultMap id="BaseResultMap" type="com.yupi.yuoj.model.entity.Competition">
+    <!--@mbg.generated-->
+    <!--@Table competition-->
+    <id column="competition_id" jdbcType="BIGINT" property="competitionId" />
+    <result column="competition_name" jdbcType="VARCHAR" property="competitionName" />
+    <result column="competition_duration" jdbcType="INTEGER" property="competitionDuration" />
+    <result column="competition_created_by" jdbcType="INTEGER" property="competitionCreatedBy" />
+    <result column="competition_start_time" jdbcType="TIMESTAMP" property="competitionStartTime" />
+    <result column="competition_context" jdbcType="VARCHAR" property="competitionContext" />
+    <result column="isDelete" jdbcType="TINYINT" property="isdelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    competition_id, competition_name, competition_duration, competition_created_by, competition_start_time, 
+    competition_context, isDelete
+  </sql>
+</mapper>
