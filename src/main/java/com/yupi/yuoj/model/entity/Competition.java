@@ -30,13 +30,13 @@ public class Competition implements Serializable {
      * 比赛时长
      */
     @TableField(value = "competition_duration")
-    private Integer competitionDuration;
+    private Long competitionDuration;
 
     /**
      * 创建人
      */
     @TableField(value = "competition_created_by")
-    private Integer competitionCreatedBy;
+    private Long competitionCreatedBy;
 
     /**
      * 开始时间

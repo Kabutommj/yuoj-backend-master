@@ -4,7 +4,10 @@ import com.yupi.yuoj.common.BaseResponse;
 import com.yupi.yuoj.common.ResultUtils;
 import com.yupi.yuoj.model.entity.Competition;
 import com.yupi.yuoj.service.CompetitionService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,17 +27,17 @@ public class CompetitionController {
      * 获取列表
      * @return
      */
-    @RequestMapping("/getCompetitionList")
+    @GetMapping("/getCompetitionList")
     public BaseResponse<List<Competition>> getCompetitionList() {
-
-        return null;
+        List<Competition> list = competitionService.list();
+        return ResultUtils.success(list);
     }
 
     /**
      * 获取详情
      * @return
      */
-    @RequestMapping("/getCompetitionDetail")
+    @GetMapping("/getCompetitionDetail")
     public BaseResponse<Competition> getCompetitionDetail(Long id) {
         Competition byId = competitionService.getById(id);
         return ResultUtils.success(byId);
@@ -46,8 +49,8 @@ public class CompetitionController {
      * 创建
      * @return
      */
-    @RequestMapping("/createCompetition")
-    public BaseResponse<Competition> createCompetition(Competition competition) {
+    @PostMapping("/createCompetition")
+    public BaseResponse<Competition> createCompetition(@RequestBody Competition competition) {
         competitionService.save(competition);
         return ResultUtils.success(competition);
     }
@@ -56,8 +59,8 @@ public class CompetitionController {
      * 更新
      * @return
      */
-    @RequestMapping("/updateCompetition")
-    public BaseResponse<Competition> updateCompetition(Competition competition) {
+    @PostMapping("/updateCompetition")
+    public BaseResponse<Competition> updateCompetition(@RequestBody Competition competition) {
         competitionService.updateById(competition);
         return ResultUtils.success(competition);
     }
@@ -67,7 +70,7 @@ public class CompetitionController {
      * 删除
      * @return
      */
-    @RequestMapping("/deleteCompetition")
+    @GetMapping("/deleteCompetition")
     public BaseResponse<Boolean> deleteCompetition(Long id) {
         boolean b = competitionService.removeById(id);
         return ResultUtils.success(b);
