@@ -24,6 +24,11 @@ spring:
     url: jdbc:mysql://182.254.140.26:3306/yuoj
     username: root
     password: Wzy020730!
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1/match
+#    username: root
+#    password: 123456
   # Redis 配置
   # todo 需替换配置，然后取消注释
   redis:
