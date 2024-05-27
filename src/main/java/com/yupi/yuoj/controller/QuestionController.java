@@ -337,4 +337,11 @@ public class QuestionController {
 
 
 
+    @GetMapping("all")
+    public BaseResponse<List<Question>> getAllQuestion(){
+        List<Question> list = questionService.list();
+        return ResultUtils.success(list);
+    }
+
+
 }
