@@ -19,7 +19,7 @@ public class Competition implements Serializable {
     /**
      * id
      */
-    @TableId(value = "competition_id", type = IdType.ASSIGN_ID)
+    @TableId(value = "competition_id", type = IdType.AUTO)
     private Long competitionId;
 
     /**

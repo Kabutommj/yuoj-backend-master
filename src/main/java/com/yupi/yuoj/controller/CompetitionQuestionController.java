@@ -1,15 +1,19 @@
 package com.yupi.yuoj.controller;
 
+import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.JsonObject;
 import com.yupi.yuoj.common.BaseResponse;
 import com.yupi.yuoj.common.ResultUtils;
 import com.yupi.yuoj.model.entity.CompetitionQuestion;
+import com.yupi.yuoj.model.entity.Question;
 import com.yupi.yuoj.service.CompetitionQuestionService;
+import com.yupi.yuoj.service.CompetitionService;
+import com.yupi.yuoj.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,6 +30,10 @@ public class CompetitionQuestionController {
     private CompetitionQuestionService competitionQuestionService;
 
 
+    @Resource
+    private QuestionService questionService;
+
+
 
     /**
      * 新增
@@ -34,9 +42,9 @@ public class CompetitionQuestionController {
      * @return
      */
     @PostMapping("/addCompetitionQuestion")
-    public BaseResponse<String> addCompetitionQuestion(@RequestBody JsonObject jsonObject, HttpServletRequest request) throws JSONException {
-        Long gameId = jsonObject.get("gameId").getAsLong();
-        List<Long> questionList = (List<Long>) jsonObject.get("questionList");
+    public BaseResponse<String> addCompetitionQuestion(@RequestBody JSONObject jsonObject, HttpServletRequest request) throws JSONException {
+        Long gameId = jsonObject.getLong("gameId");
+        List<Long> questionList = jsonObject.getBeanList("questionList",Long.class);
 
         questionList.forEach(questionId -> {
             CompetitionQuestion competitionQuestion = new CompetitionQuestion();
@@ -54,15 +62,15 @@ public class CompetitionQuestionController {
      * @return
      */
     @GetMapping("/queryCompetitionQuestion")
-    public BaseResponse<List<Long>> queryCompetitionQuestion(@RequestParam String gameId, HttpServletRequest request) {
+    public BaseResponse<List<Question>> queryCompetitionQuestion(@RequestParam String gameId, HttpServletRequest request) {
         List<CompetitionQuestion> competitionQuestionList = competitionQuestionService.list(new LambdaQueryWrapper<CompetitionQuestion>()
                 .eq(CompetitionQuestion::getCompetitionId, gameId));
 
         List<Long> answerList = competitionQuestionList.stream()
                 .map(item -> item.getQuestionId())
                 .collect(Collectors.toList());
-
-        return ResultUtils.success(answerList);
+        List<Question> competitionQuestions = questionService.listByIds(answerList);
+        return ResultUtils.success(competitionQuestions);
     }
 
 }
