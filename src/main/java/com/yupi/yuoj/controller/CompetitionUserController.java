@@ -34,7 +34,7 @@ public class CompetitionUserController {
      * @return
      */
     @PostMapping("addCompetitionUser")
-    public BaseResponse<String> addCompetitionUser(@RequestBody Long gameId, HttpServletRequest request) {
+    public BaseResponse<String> addCompetitionUser(@RequestParam Long gameId, HttpServletRequest request) {
         User user = userService.getLoginUser(request);
 
         CompetitionUser competitionUser = new CompetitionUser();
