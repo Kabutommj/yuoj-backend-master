@@ -28,7 +28,7 @@ public class CompetitionUserController {
      * @return
      */
     @PostMapping("addCompetitionUser")
-    public BaseResponse<String> addCompetitionUser(@RequestBody CompetitionUser competitionUser) {
+    public BaseResponse<String> addCompetitionUser(@RequestBody CompetitionUser competitionUser, HttpServletRequest request) {
         boolean save = competitionUserService.save(competitionUser);
         return ResultUtils.success(save == true ? "新增成功" : "新增失败");
     }
