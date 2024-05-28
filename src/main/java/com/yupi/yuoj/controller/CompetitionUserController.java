@@ -4,8 +4,11 @@ package com.yupi.yuoj.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yupi.yuoj.common.BaseResponse;
 import com.yupi.yuoj.common.ResultUtils;
+import com.yupi.yuoj.model.entity.CompetitionQuestion;
 import com.yupi.yuoj.model.entity.CompetitionUser;
+import com.yupi.yuoj.model.entity.User;
 import com.yupi.yuoj.service.CompetitionUserService;
+import com.yupi.yuoj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +25,22 @@ public class CompetitionUserController {
     @Resource
     private CompetitionUserService competitionUserService;
 
+    @Resource
+    private UserService userService;
+
     /**
      * 新增
-     * @param competitionUser
+     * @param gameId
      * @return
      */
     @PostMapping("addCompetitionUser")
-    public BaseResponse<String> addCompetitionUser(@RequestBody CompetitionUser competitionUser, HttpServletRequest request) {
+    public BaseResponse<String> addCompetitionUser(@RequestBody Long gameId, HttpServletRequest request) {
+        User user = userService.getLoginUser(request);
+
+        CompetitionUser competitionUser = new CompetitionUser();
+        competitionUser.setUserId(user.getId());
+        competitionUser.setCompetitionId(gameId);
+
         boolean save = competitionUserService.save(competitionUser);
         return ResultUtils.success(save == true ? "新增成功" : "新增失败");
     }
