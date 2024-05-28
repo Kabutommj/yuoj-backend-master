@@ -54,7 +54,7 @@ public class CompetitionQuestionController {
      * @return
      */
     @GetMapping("/queryCompetitionQuestion")
-    public BaseResponse<List<Long>> queryCompetitionQuestion(@RequestParam String gameId, HttpServletRequest request) {
+    public BaseResponse<List<Long>> queryCompetitionQuestion(@RequestParam Long gameId, HttpServletRequest request) {
         List<CompetitionQuestion> competitionQuestionList = competitionQuestionService.list(new LambdaQueryWrapper<CompetitionQuestion>()
                 .eq(CompetitionQuestion::getCompetitionId, gameId));
 

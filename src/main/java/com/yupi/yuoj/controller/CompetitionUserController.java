@@ -40,7 +40,7 @@ public class CompetitionUserController {
      * @return
      */
     @GetMapping("/queryUserList")
-    public BaseResponse<List<Long>> queryUserList(@RequestParam String gameId, HttpServletRequest request) {
+    public BaseResponse<List<Long>> queryUserList(@RequestParam Long gameId, HttpServletRequest request) {
         List<CompetitionUser> competitionUserList = competitionUserService.list(new LambdaQueryWrapper<CompetitionUser>()
                 .eq(CompetitionUser::getCompetitionId, gameId));
 
@@ -58,7 +58,7 @@ public class CompetitionUserController {
      * @return
      */
     @GetMapping("/queryCompetitionList")
-    public BaseResponse<List<Long>> queryCompetitionList(@RequestParam String userId, HttpServletRequest request) {
+    public BaseResponse<List<Long>> queryCompetitionList(@RequestParam Long userId, HttpServletRequest request) {
         List<CompetitionUser> competitionUserList = competitionUserService.list(new LambdaQueryWrapper<CompetitionUser>()
                 .eq(CompetitionUser::getUserId, userId));
 
