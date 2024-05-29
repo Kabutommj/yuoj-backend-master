@@ -1,5 +1,6 @@
 package com.yupi.yuoj.controller;
 
+import cn.hutool.json.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.gson.JsonObject;
 import com.yupi.yuoj.common.BaseResponse;
@@ -12,7 +13,6 @@ import com.yupi.yuoj.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
