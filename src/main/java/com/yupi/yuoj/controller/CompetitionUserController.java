@@ -2,8 +2,11 @@ package com.yupi.yuoj.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yupi.yuoj.common.BaseResponse;
+import com.yupi.yuoj.common.ErrorCode;
 import com.yupi.yuoj.common.ResultUtils;
+import com.yupi.yuoj.exception.ThrowUtils;
 import com.yupi.yuoj.model.entity.Competition;
 import com.yupi.yuoj.model.entity.CompetitionQuestion;
 import com.yupi.yuoj.model.entity.CompetitionUser;
@@ -49,7 +52,11 @@ public class CompetitionUserController {
         CompetitionUser competitionUser = new CompetitionUser();
         competitionUser.setUserId(user.getId());
         competitionUser.setCompetitionId(gameId);
-
+        QueryWrapper<CompetitionUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",user.getId());
+        queryWrapper.eq("competition_id",gameId);
+        long count = competitionUserService.count(queryWrapper);
+        ThrowUtils.throwIf(count>0, ErrorCode.PARAMS_ERROR,"您已经参加过该比赛了！");
         boolean save = competitionUserService.save(competitionUser);
         return ResultUtils.success(save == true ? "新增成功" : "新增失败");
     }
@@ -152,6 +159,21 @@ public class CompetitionUserController {
         }
 
         return ResultUtils.success(answer);
+    }
+
+    @GetMapping("isBaoMing")
+    public BaseResponse<Boolean> isBaoMing(Long gameId,HttpServletRequest request){
+        User user = userService.getLoginUser(request);
+
+        QueryWrapper<CompetitionUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",user.getId());
+        queryWrapper.eq("competition_id",gameId);
+        long count = competitionUserService.count(queryWrapper);
+        if (count>0){
+            return ResultUtils.success(true);
+        }else {
+            return ResultUtils.success(false);
+        }
     }
 
 
